@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block link %}
+    <link rel="stylesheet" href="../static/css/barrage.css">
+{% endblock %}
+{% block main %}
+    <div class="box">
+        <div class="barrage-container-wrap clearfix">
+            <div class="barrage-container">
+            </div>
+        </div>
+    </div>
+    <div class="pause-wrap">
+        <button class="pause-btn">全部暂停</button>
+    </div>
+{% endblock %}
+{% block script %}
+    <script type="text/javascript">
+    //js和html文件是分开的，传递数据需要先定义好参数，再执行js。参考：https://blog.csdn.net/m0_38061194/article/details/78891125
+        var Server = {
+            barrage:{{ barrage|safe }}
+        };
+    </script>
+    <script src="../static/js/barrage.js"></script>
+{% endblock %}
