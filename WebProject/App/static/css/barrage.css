@@ -38,7 +38,9 @@
 .barrage-item .barrage-detail {
     display: none;
     position: absolute;
-    top: -26px;
+    width: 300px;
+    height: 600px;
+    /*top: -26px;*/
     padding: 7px 15px;
     line-height: 12px;
     font-size: 12px;
@@ -49,24 +51,8 @@
     border-radius: 3px;
     -webkit-box-shadow: 0 0 10px 1px rgba(0, 0, 0, .1);
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, .1);
-    -webkit-transform-origin: 15px 100%;
+    -webkit-transform-origin: left bottom;
     -ms-transform-origin: 15px 100%;
     transform-origin: 15px 100%;
     animation: tipScale cubic-bezier(.22, .58, .12, .98) .4s;
-}
-
-.send-btn {
-    height: 38px;
-    line-height: 38px;
-    text-align: center;
-    font-weight: bold;
-    color: #fff;
-    background: #93d0ea;
-    text-shadow: 1px 1px 1px #333;
-    border-radius: 5px;
-    margin: 0 20px 20px 0;
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    padding: 5px 15px;
 }

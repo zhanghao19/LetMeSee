@@ -10,7 +10,6 @@
     let barrageWidth = ~~window.getComputedStyle(barrageBoxWrap).width.replace('px', '');
     let barrageHeight = ~~window.getComputedStyle(barrageBoxWrap).height.replace('px', '');
 
-    let pauseBtn = document.querySelector('.pause-btn');    //暂停按钮
     //创建弹幕
     function createBarrage(item, isSendMsg) {
         let divNode = document.createElement('div');    //弹幕的标签
@@ -20,7 +19,8 @@
         divNode.classList.add('barrage-item');  //追加class
         barrageBox.appendChild(divNode);    //弹幕的标签作为弹幕容器的子代标签
 
-        divChildNode.innerHTML = '详细信息';  //鼠标悬停展示的内容
+        let barragePopups = "/popups/"+item.barrage_id; //弹幕详情页的url
+        divChildNode.innerHTML = '<iframe src='+barragePopups+'></iframe>';  //鼠标悬停展示的内容
         divChildNode.classList.add('barrage-detail');
         divNode.appendChild(divChildNode);  //提示文本的标签作为弹幕标签的子代标签
 

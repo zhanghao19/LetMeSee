@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>弹幕详情</title>
+</head>
+<body>
+    <h1>{{ barrage.text }}</h1>
+    <span><a class="barrage-link" href="{{ barrage.url }}"><-查看源网页-></a></span>
+</body>
+<script>
+    var barrageLink = document.querySelector('.barrage-link'),
+        barrageUrl = barrageLink.getAttribute('href');
+    barrageLink.onclick = function () {
+        //点击弹窗中的链接，新建一个标签页
+            window.open(barrageUrl);
+        };
+</script>
+</html>
