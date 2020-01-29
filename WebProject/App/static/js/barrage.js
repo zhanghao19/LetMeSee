@@ -8,21 +8,21 @@
 
     //容器的宽高度
     let contentWidth = ~~window.getComputedStyle(barrageBoxWrap).width.replace('px', '');
-    //let barrageBoxHeight = ~~window.getComputedStyle(barrageBoxWrap).height.replace('px', '');
     let boxHeight = ~~window.getComputedStyle(barrageBox).height.replace('px', '');
 
-    let heightArrayLength = Math.round(boxHeight/30);
+    let heightArrayLength = Math.round(boxHeight / 30);
     //定义一个包含弹幕的宽和高度范围的数组
     let heightArray = [];
     console.log(heightArray);
     //将每个可用的高度,放入数组, 以便在创建数组时使用
-    for (let i = 30; i < boxHeight-10; i += 30){
+    for (let i = 30; i < boxHeight - 10; i += 30) {
         heightArray.push(i)
     }
 
     //创建弹幕
     function createBarrage(item, index, forTime) {
-        if (index >= heightArrayLength){
+        if (index >= heightArrayLength) {
+            //如果索引达到高度数组的长度,则需重置索引到0,因此取余数
             index = index % heightArrayLength;
         }
         let divNode = document.createElement('div');    //弹幕的标签
@@ -39,12 +39,9 @@
 
         //***设置弹幕的初始位置***
         //以容器的宽度为基准随机生成每条弹幕的左侧偏移值
-        let barrageOffsetLeft = getRandom(contentWidth*forTime, contentWidth * (forTime+0.618));
-        //让新建的弹幕最快显示,d=a?b:c(判断a，为真返回b，否则返回c）
-        //barrageOffsetLeft = isSendMsg ? contentWidth : barrageOffsetLeft;
+        let barrageOffsetLeft = getRandom(contentWidth * forTime, contentWidth * (forTime + 0.618));
         //以容器的高度为基准随机生成每条弹幕的上方偏移值
         let barrageOffsetTop = heightArray[index];
-        console.log(barrageOffsetTop);
         //随机选择一个颜色数组中的元素，从数组中取值的标准写法
         let barrageColor = barrageColorArray[Math.floor(Math.random() * (barrageColorArray.length))];
         //执行初始化滚动
@@ -56,9 +53,10 @@
             barrageUrl: item.url
         });
     }
+
     //初始化弹幕移动(速度，延迟)
     function initBarrage(obj) {
-        //初始化
+        //初始化位置颜色
         this.style.left = obj.left + 'px';
         this.style.top = obj.top + 'px';
         this.style.color = obj.color;
@@ -84,7 +82,6 @@
                 //显示提示****此处用于展示详情窗口
                 barrageChileNode.style.display = 'block';
             }
-
             //设置延迟显示
             this.timeOut = setTimeout(showDetailPopups, 1000);
 
@@ -123,32 +120,30 @@
         }
     }
 
-    //移动
+    //弹幕移动
     function move(obj) {
         obj.distance -= 2; //移动速度为一次1像素
         //transform可以对元素进行翻转、移动、倾斜等操作，这里主要使用了移动元素的效果
         obj.style.transform = 'translateX(' + obj.distance + 'px)';
     }
 
-    //随机获取高度
+    //随机获取区间内的一个值
     function getRandom(start, end) {
         return start + (Math.random() * (end - start));
     }
+
     //Math.random()随机获取一个0~1之间的值
     /*******初始化事件**********/    //整个事件的入口
+    //获取弹幕数据集
     let barrageArray = Server.barrage;
+    //循环弹幕数组所需的切片次数
     let forTime = Math.ceil(barrageArray.length / heightArrayLength);
-    for (let i=0; i<forTime; i++) {
+    for (let i = 0; i < forTime; i++) {
+        //对弹幕数组切片,取出一部分要显示的弹幕,一直循环到取完
         let eachBarrageArray = barrageArray.slice(heightArrayLength * i, heightArrayLength * (i + 1));
-
         for (let item of eachBarrageArray) {
-            createBarrage(item, eachBarrageArray.indexOf(item), i+1);
+            //遍历每个弹幕, 并传入弹幕元素的索引,和循环次数(用作定位)
+            createBarrage(item, eachBarrageArray.indexOf(item), i + 1);
         }
     }
-    // Array Remove - By John Resig (MIT Licensed)
-    Array.prototype.remove = function (from, to) {
-        var rest = this.slice((to || from) + 1 || this.length);
-        this.length = from < 0 ? this.length + from : from;
-        return this.push.apply(this, rest);
-    };
 })();
