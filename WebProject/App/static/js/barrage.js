@@ -1,7 +1,6 @@
 (function () {
-    let barrageColorArray = [
-        '#0099CC', '#333333', '#009966', '#9933FF', '#CCCCFF', '#CC9933'
-    ];
+    let barrageColorArray = {baidu : '#0099cc', bilibili: '#ff53e0'};
+
     let barrageTipWidth = 50; //提示框的宽度
     let barrageBoxWrap = document.querySelector('.barrage-container-wrap');
     let barrageBox = document.querySelector('.barrage-container');
@@ -32,8 +31,8 @@
         divNode.classList.add('barrage-item');  //追加class
         barrageBox.appendChild(divNode);    //弹幕的标签作为弹幕容器的子代标签
 
-        let barragePopups = "/popups/" + item.barrage_id; //弹幕详情页的url
-        divChildNode.innerHTML = '<iframe src=' + barragePopups + '></iframe>';  //鼠标悬停展示的内容
+        let barragePopups = "/popups?id=" + item.barrage_id + "&type=" +item.barrage_type; //弹幕详情页的url
+        divChildNode.innerHTML = '<iframe class="barrage-popup" src=' + barragePopups + '></iframe>';  //鼠标悬停展示的内容
         divChildNode.classList.add('barrage-detail');
         divNode.appendChild(divChildNode);  //提示文本的标签作为弹幕标签的子代标签
 
@@ -43,7 +42,9 @@
         //以容器的高度为基准随机生成每条弹幕的上方偏移值
         let barrageOffsetTop = heightArray[index];
         //随机选择一个颜色数组中的元素，从数组中取值的标准写法
-        let barrageColor = barrageColorArray[Math.floor(Math.random() * (barrageColorArray.length))];
+        // let barrageColor = barrageColorArray[Math.floor(Math.random() * (barrageColorArray.length))];
+        //通过弹幕类型选择颜色
+        let barrageColor = barrageColorArray[item.barrage_type];
         //执行初始化滚动
         //fun.call()传入的第一个参数作为之后的this，详解：https://codeplayer.vip/p/j7sj5
         initBarrage.call(divNode, {
@@ -87,7 +88,7 @@
 
         };
 
-        //鼠标移走移动
+        //鼠标移走
         this.onmouseleave = function () {
             //鼠标移走，隐藏提示
             barrageChileNode.style.display = 'none';

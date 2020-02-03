@@ -1,3 +1,5 @@
 from .baidu.spider import get_news
+from .bilibili.spider import get_videos
 
-barrage = get_news()
+baidu_barrages = get_news()
+bilibili_barrages = get_videos()
