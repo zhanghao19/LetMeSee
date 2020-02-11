@@ -1,7 +1,7 @@
 import random
 from flask import Blueprint, render_template, request
 
-from SpiderProject import baidu_barrages, bilibili_barrages
+from Spider import baidu_barrages, bilibili_barrages
 
 first_blue = Blueprint('index', __name__)
 

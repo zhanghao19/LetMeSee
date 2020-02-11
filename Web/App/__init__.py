@@ -1,6 +1,6 @@
 from flask import Flask
 
-from WebProject.App.views import init_view
+from Web.App.views import init_view
 
 
 def create_app():
