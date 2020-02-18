@@ -6,13 +6,8 @@
     <link rel="stylesheet" href="../static/css/popup.css">
 </head>
 <body>
-    <h3>{{ barrage.text }}</h3>
-    <div class="barrage-img-box">
-    {% if barrage.barrage_type == "bilibili" %}
-        <img class="barrage-img" src="{{ barrage.cover }}" alt="{{ barrage.text }}">
-    {% endif %}
-    </div>
-    <a class="barrage-link" href="{{ barrage.url }}"><-查看源网页-></a>
+    <h3>{{ barrages.text }}</h3>
+    <a class="barrage-link" href="{{ barrages.url }}"><-查看源网页-></a>
 </body>
 <script>
     let barrageLink = document.querySelector('.barrage-link'),

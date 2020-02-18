@@ -60,12 +60,16 @@ html,body {
     border-bottom: 4px solid #a7ca1b;
 }
 /* ========= nav end ============ */
+.barrage-menu{
+    float: right;
+}
 /* ================= header end ================= */
 
 /* ================= main start ================= */
 #main {
     width: 100%;
     height: calc(100% - 174px);
+    display: flex;
 }
 /* ================= main end ================= */
 

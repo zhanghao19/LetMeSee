@@ -1,3 +1,4 @@
+//弹幕的实现
 (function () {
     let barrageColorArray = {baidu : '#0099cc', bilibili: '#ff53e0'};
 
@@ -31,8 +32,9 @@
         divNode.classList.add('barrage-item');  //追加class
         barrageBox.appendChild(divNode);    //弹幕的标签作为弹幕容器的子代标签
 
-        let barragePopups = "/popups?id=" + item.barrage_id + "&type=" +item.barrage_type; //弹幕详情页的url
-        divChildNode.innerHTML = '<iframe class="barrage-popup" src=' + barragePopups + '></iframe>';  //鼠标悬停展示的内容
+        // let barragePopups = "/popups?id=" + item.barrage_id + "&type=" +item.barrage_type; //弹幕详情页的url
+        // divChildNode.innerHTML = '<iframe class="barrage-popup" src=' + barragePopups + '></iframe>';  //鼠标悬停展示的内容
+        divChildNode.innerHTML = '<div class="barrage-link">点击查看源网页</div>';  //鼠标悬停展示的内容
         divChildNode.classList.add('barrage-detail');
         divNode.appendChild(divChildNode);  //提示文本的标签作为弹幕标签的子代标签
 
@@ -146,5 +148,30 @@
             //遍历每个弹幕, 并传入弹幕元素的索引,和循环次数(用作定位)
             createBarrage(item, eachBarrageArray.indexOf(item), i + 1);
         }
+    }
+
+})();
+
+//弹幕列表的实现
+(function () {
+    let expandBtn = document.querySelector('.expand'),
+        barrageList = document.querySelector('.barrage-list');
+    expandBtn.onclick = function () {
+        if (barrageList.style.display === "none") {
+            barrageList.style.display = "block";
+            expandBtn.style.transform = "rotateY(180deg)";
+        }else {
+            barrageList.style.display = "none";
+            expandBtn.style.transform = "rotateY(0deg)";
+        }
+    };
+
+    let barrageItems = document.getElementsByClassName('barrage-list-item');
+    for (let item of barrageItems){
+        let barrageUrl = item.getAttribute('data-url');
+        item.onclick = function () {
+            //点击链接，新建一个标签页
+            window.open(barrageUrl);
+        };
     }
 })();
