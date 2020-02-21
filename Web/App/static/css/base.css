@@ -68,7 +68,7 @@ html,body {
 /* ================= main start ================= */
 #main {
     width: 100%;
-    height: calc(100% - 174px);
+    height: calc(100% - 64px);
     display: flex;
 }
 /* ================= main end ================= */

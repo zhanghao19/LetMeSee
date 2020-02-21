@@ -1,3 +1,4 @@
+/*弹幕容器*/
 .box {
     width: 100%;
     height: 100%;
@@ -11,6 +12,7 @@
     overflow: hidden;
     background: white no-repeat;
     background-size: 100% 100%;
+    z-index: auto;
 }
 
 .barrage-container {
@@ -19,12 +21,11 @@
     left: 0;
     bottom: 15px;
     cursor: default;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
+    z-index: 1;
 }
 
+/*弹幕主体*/
 .barrage-item {
     position: absolute;
     top: 0;
@@ -33,9 +34,10 @@
     cursor: pointer;
     color: #fff;
     font-size: 20px;
+    z-index: 2;
 }
 
-.barrage-item .barrage-detail {
+.barrage-item .barrage-link {
     display: none;
     position: absolute;
     width: 100px;
@@ -46,21 +48,31 @@
     color: #444444;
     background-color: #fff;
     border: 1px solid #ddd;
-    -webkit-box-shadow: 0 0 10px 1px rgba(0, 0, 0, .1);
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, .1);
-    -webkit-transform-origin: center top;
-    -ms-transform-origin: center top;
     transform-origin: center top;
     animation: tipScale cubic-bezier(.22, .58, .12, .98) .4s;
 }
 
+/*展开列表按钮*/
 .expand{
-    height: 100%;
+    height: 34px;
+    width: 34px;
     background-color: #3aa3e5;
-    color: white;
     cursor: pointer;
+    position: relative;
+    float: right;
+    z-index: 10;
 }
 
+.expand img{
+    width:30px;
+    height: 30px;
+    position: relative;
+    margin-top: 2px;
+    margin-left: 2px;
+}
+
+/*弹幕列表*/
 .barrage-list{
     display: none;
     justify-content: flex-end;
@@ -72,15 +84,34 @@
     line-height: 20px;
     overflow-y: scroll;
 }
-.barrage-list ul li{
+.barrage-list .barrage-list-item{
     border: 1px solid #363636;
     cursor: pointer;
 }
-.expand img{
-    width:26px;
+
+/*弹幕详情面板*/
+.list-header{
+    width: 100%;
+    height: 35px;
+    background-color: #3aa3e5;
+}
+.close-btn{
+    width: 30px;
     height: auto;
-    position: relative;
-    top: 50%; /*偏移*/
-    margin-top: -12px;
-    transform: rotateY(0deg);
+    float: right;
+    cursor: pointer;
+}
+.barrage-detail-panel{
+    display: none;
+    justify-content: flex-end;
+    background-color: #444444;
+    width: 30%;
+    height: 100%;
+    color: white;
+    line-height: 20px;
+    overflow-y: scroll;
+}
+
+.barrage-detail-panel .contents{
+    font-size: 16px;
 }

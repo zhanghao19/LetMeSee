@@ -5,20 +5,34 @@
 {% block main %}
     <div class="box">
         <div class="barrage-container-wrap clearfix">
-            <div class="barrage-container"></div>
+            <div class="barrage-container">
+
+
+            </div>
+             <div class="expand"><img src="../static/img/list.png" alt="expand" title="弹幕列表"></div>
         </div>
+
     </div>
-    <div class="expand"><img src="../static/img/zhankai.png" alt="expand" title="弹幕列表"></div>
     <div class="barrage-list">
+        <div class="list-header">弹幕列表
+            <img src="../static/img/close.png" alt="close" class="close-btn" title="关闭">
+        </div>
         <ul>
-            {% for barrage in barrages%}
-                <li>
-                    <div class="barrage-list-item" data-url="{{ barrage.url }}" title="{{ barrage.text }}">
-                        {{ barrage.text | truncate_text }}
-                    </div>
+            {% for barrage in barrages %}
+                <li class="barrage-list-item" data-url="{{ barrage.url }}" title="{{ barrage.text }}">
+                    {{ barrage.text | truncate_text }}
                 </li>
             {% endfor %}
         </ul>
+    </div>
+    <div class="barrage-detail-panel">
+        <div class="list-header">弹幕详情
+            <img src="../static/img/close.png" alt="close" class="close-btn" title="关闭">
+        </div>
+        <h3 class="title"></h3>
+        <a href="" class="source"><-查看源网页-></a>
+        <p class="contents"></p>
+        <p class="update-time"></p>
     </div>
 {% endblock %}
 {% block script %}

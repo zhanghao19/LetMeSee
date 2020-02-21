@@ -1,7 +1,6 @@
 //弹幕的实现
 (function () {
     let barrageColorArray = {baidu : '#0099cc', bilibili: '#ff53e0'};
-
     let barrageTipWidth = 50; //提示框的宽度
     let barrageBoxWrap = document.querySelector('.barrage-container-wrap');
     let barrageBox = document.querySelector('.barrage-container');
@@ -34,8 +33,8 @@
 
         // let barragePopups = "/popups?id=" + item.barrage_id + "&type=" +item.barrage_type; //弹幕详情页的url
         // divChildNode.innerHTML = '<iframe class="barrage-popup" src=' + barragePopups + '></iframe>';  //鼠标悬停展示的内容
-        divChildNode.innerHTML = '<div class="barrage-link">点击查看源网页</div>';  //鼠标悬停展示的内容
-        divChildNode.classList.add('barrage-detail');
+        divChildNode.innerHTML = '点击查看详情';  //鼠标悬停展示的内容
+        divChildNode.classList.add('barrage-link');
         divNode.appendChild(divChildNode);  //提示文本的标签作为弹幕标签的子代标签
 
         //***设置弹幕的初始位置***
@@ -53,7 +52,8 @@
             left: barrageOffsetLeft,
             top: barrageOffsetTop,
             color: barrageColor,
-            barrageUrl: item.url
+            barrageUrl: item.url,
+            barrageText: item.text,
         });
     }
 
@@ -100,8 +100,9 @@
 
         //打开弹幕对应的目标页面
         this.onclick = function () {
-            window.open(obj.barrageUrl);
+            showDetailPanel(obj)
         };
+
     }
 
     //回流：增删元素会引起回流，重绘：改变样式会引起重绘
@@ -149,29 +150,61 @@
             createBarrage(item, eachBarrageArray.indexOf(item), i + 1);
         }
     }
-
 })();
 
+let barrageList = document.querySelector('.barrage-list'),
+    barrageDetailPanel = document.querySelector('.barrage-detail-panel');
 //弹幕列表的实现
 (function () {
-    let expandBtn = document.querySelector('.expand'),
-        barrageList = document.querySelector('.barrage-list');
+    let expandBtn = document.querySelector('.expand');
     expandBtn.onclick = function () {
         if (barrageList.style.display === "none") {
             barrageList.style.display = "block";
-            expandBtn.style.transform = "rotateY(180deg)";
         }else {
             barrageList.style.display = "none";
-            expandBtn.style.transform = "rotateY(0deg)";
         }
+        //关闭详情页显示列表页
+        barrageDetailPanel.style.display = 'none'
     };
 
-    let barrageItems = document.getElementsByClassName('barrage-list-item');
+    let barrageItems = document.getElementsByClassName('barrage-list-item');    //li的集合
     for (let item of barrageItems){
-        let barrageUrl = item.getAttribute('data-url');
+        let barrageText = item.getAttribute('title');
+        let barrageURL = item.getAttribute('data-url');
         item.onclick = function () {
             //点击链接，新建一个标签页
-            window.open(barrageUrl);
+            showDetailPanel.call(item,{
+                barrageText: barrageText,
+                barrageUrl: barrageURL,
+            })
         };
     }
 })();
+
+//展示弹幕详情页
+function showDetailPanel(obj) {
+    let barrageTitle = document.querySelector('.title'),
+        barrageURL = document.querySelector('.source'),
+        barrageContents = document.querySelector('.contents'),
+        barrageDate = document.querySelector('.update-time');
+    //关闭列表页显示详情页
+    barrageDetailPanel.style.display = 'block';
+    barrageList.style.display = "none";
+    //设置详情页的参数
+    barrageTitle.innerHTML = obj.barrageText;
+    barrageContents.innerHTML = 'Hello,World!';
+    barrageDate.innerHTML = '2020/2/19';
+
+    barrageURL.onclick = function () {
+        window.open(obj.barrageUrl);
+    };
+}
+
+//close button event
+let closeBtns = document.querySelectorAll('.close-btn');
+for (let closeBtn of closeBtns){
+    closeBtn.onclick = function () {
+        barrageDetailPanel.style.display = "none";
+        barrageList.style.display = "none";
+    };
+}
