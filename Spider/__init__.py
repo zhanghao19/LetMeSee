@@ -1,15 +1,12 @@
-from .spider_mode.spider import get_barrages
+from dbs.m_mongo import MyMongoDB
+
+mg = MyMongoDB()
 
 
-baidu_barrages = get_barrages(
-    name='baidu',
-    url='https://news.baidu.com/',
-    title_xpath='//*[@id="pane-news"]//a//text()',
-    url_xpath='//*[@id="pane-news"]//a/@href')
+baidu_barrages = [i for i in mg.coll.find(
+    {'BType': 'baidu'},
+    {'_id': 0, 'BID': 1, 'BText': 1, 'BUrl': 1, 'BType': 1})]
 
-bilibili_barrages = get_barrages(
-    name='bilibili',
-    url='https://www.bilibili.com/ranking/',
-    title_xpath='//div[@class="info"]//a[@class="title"]//text()',
-    url_xpath='//div[@class="info"]//a[@class="title"]/@href')
-
+bilibili_barrages = [i for i in mg.coll.find(
+    {'BType': 'bilibili'},
+    {'_id': 0, 'BID': 1, 'BText': 1, 'BUrl': 1, 'BType': 1})]

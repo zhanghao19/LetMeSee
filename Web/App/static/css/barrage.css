@@ -115,3 +115,8 @@
 .barrage-detail-panel .contents{
     font-size: 16px;
 }
+
+.barrage-detail-panel .cover{
+    width: 100%;
+    height: auto;
+}

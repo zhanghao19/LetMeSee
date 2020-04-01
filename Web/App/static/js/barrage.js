@@ -12,7 +12,7 @@
     let heightArrayLength = Math.round(boxHeight / 30);
     //定义一个包含弹幕的宽和高度范围的数组
     let heightArray = [];
-    console.log(heightArray);
+    // console.log(heightArray);
     //将每个可用的高度,放入数组, 以便在创建数组时使用
     for (let i = 30; i < boxHeight - 10; i += 30) {
         heightArray.push(i)
@@ -27,12 +27,12 @@
         let divNode = document.createElement('div');    //弹幕的标签
         let divChildNode = document.createElement('div');  //提示文本的标签
 
-        divNode.innerHTML = item.text;    //将弹幕内容插入标签中， innerHTML表示这个标签中的字符内容
+        divNode.innerHTML = item.BText;    //将弹幕内容插入标签中， innerHTML表示这个标签中的字符内容
         divNode.classList.add('barrage-item');  //追加class
         barrageBox.appendChild(divNode);    //弹幕的标签作为弹幕容器的子代标签
 
         // let barragePopups = "/popups?id=" + item.barrage_id + "&type=" +item.barrage_type; //弹幕详情页的url
-        // divChildNode.innerHTML = '<iframe class="barrage-popup" src=' + barragePopups + '></iframe>';  //鼠标悬停展示的内容
+        // divChildNode.innerHTML = '<iframe class="barrages-popup" src=' + barragePopups + '></iframe>';  //鼠标悬停展示的内容
         divChildNode.innerHTML = '点击查看详情';  //鼠标悬停展示的内容
         divChildNode.classList.add('barrage-link');
         divNode.appendChild(divChildNode);  //提示文本的标签作为弹幕标签的子代标签
@@ -45,15 +45,14 @@
         //随机选择一个颜色数组中的元素，从数组中取值的标准写法
         // let barrageColor = barrageColorArray[Math.floor(Math.random() * (barrageColorArray.length))];
         //通过弹幕类型选择颜色
-        let barrageColor = barrageColorArray[item.barrage_type];
+        let barrageColor = barrageColorArray[item.BType];
         //执行初始化滚动
         //fun.call()传入的第一个参数作为之后的this，详解：https://codeplayer.vip/p/j7sj5
         initBarrage.call(divNode, {
             left: barrageOffsetLeft,
             top: barrageOffsetTop,
             color: barrageColor,
-            barrageUrl: item.url,
-            barrageText: item.text,
+            barrageId: item.BID,
         });
     }
 
@@ -100,7 +99,22 @@
 
         //打开弹幕对应的目标页面
         this.onclick = function () {
-            showDetailPanel(obj)
+            let url = "/detail/",
+                data = {barrage_id:obj.barrageId};
+            $.ajax({
+                type : "get",
+                async : false,  //同步请求
+                url : url,
+                data : data,
+                dataType: "json",
+                success:function(barrage){
+                    showDetailPanel(barrage)
+                    // console.log(barrage)
+                },
+                error: function() {
+                   alert("失败，请稍后再试！");
+                }
+            });
         };
 
     }
@@ -139,7 +153,7 @@
     //Math.random()随机获取一个0~1之间的值
     /*******初始化事件**********/    //整个事件的入口
     //获取弹幕数据集
-    let barrageArray = Server.barrage;
+    let barrageArray = Server.barrages;
     //循环弹幕数组所需的切片次数
     let forTime = Math.ceil(barrageArray.length / heightArrayLength);
     for (let i = 0; i < forTime; i++) {
@@ -152,59 +166,5 @@
     }
 })();
 
-let barrageList = document.querySelector('.barrage-list'),
-    barrageDetailPanel = document.querySelector('.barrage-detail-panel');
-//弹幕列表的实现
-(function () {
-    let expandBtn = document.querySelector('.expand');
-    expandBtn.onclick = function () {
-        if (barrageList.style.display === "none") {
-            barrageList.style.display = "block";
-        }else {
-            barrageList.style.display = "none";
-        }
-        //关闭详情页显示列表页
-        barrageDetailPanel.style.display = 'none'
-    };
 
-    let barrageItems = document.getElementsByClassName('barrage-list-item');    //li的集合
-    for (let item of barrageItems){
-        let barrageText = item.getAttribute('title');
-        let barrageURL = item.getAttribute('data-url');
-        item.onclick = function () {
-            //点击链接，新建一个标签页
-            showDetailPanel.call(item,{
-                barrageText: barrageText,
-                barrageUrl: barrageURL,
-            })
-        };
-    }
-})();
 
-//展示弹幕详情页
-function showDetailPanel(obj) {
-    let barrageTitle = document.querySelector('.title'),
-        barrageURL = document.querySelector('.source'),
-        barrageContents = document.querySelector('.contents'),
-        barrageDate = document.querySelector('.update-time');
-    //关闭列表页显示详情页
-    barrageDetailPanel.style.display = 'block';
-    barrageList.style.display = "none";
-    //设置详情页的参数
-    barrageTitle.innerHTML = obj.barrageText;
-    barrageContents.innerHTML = 'Hello,World!';
-    barrageDate.innerHTML = '2020/2/19';
-
-    barrageURL.onclick = function () {
-        window.open(obj.barrageUrl);
-    };
-}
-
-//close button event
-let closeBtns = document.querySelectorAll('.close-btn');
-for (let closeBtn of closeBtns){
-    closeBtn.onclick = function () {
-        barrageDetailPanel.style.display = "none";
-        barrageList.style.display = "none";
-    };
-}

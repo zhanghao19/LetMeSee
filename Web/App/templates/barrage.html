@@ -1,46 +1,52 @@
 {% extends 'base.html' %}
 {% block link %}
     <link rel="stylesheet" href="../static/css/barrage.css">
+    <meta name="referrer" content="no-referrer" />
 {% endblock %}
 {% block main %}
     <div class="box">
         <div class="barrage-container-wrap clearfix">
             <div class="barrage-container">
 
-
             </div>
              <div class="expand"><img src="../static/img/list.png" alt="expand" title="弹幕列表"></div>
         </div>
 
     </div>
+    {# 弹幕列表 start #}
     <div class="barrage-list">
         <div class="list-header">弹幕列表
             <img src="../static/img/close.png" alt="close" class="close-btn" title="关闭">
         </div>
         <ul>
             {% for barrage in barrages %}
-                <li class="barrage-list-item" data-url="{{ barrage.url }}" title="{{ barrage.text }}">
-                    {{ barrage.text | truncate_text }}
+                <li class="barrage-list-item" data-id="{{ barrage.BID }}">
+                    {{ barrage.BText | truncate_text }}
                 </li>
             {% endfor %}
         </ul>
     </div>
+    {# 弹幕列表 end #}
+    {# 弹幕详情 start #}
     <div class="barrage-detail-panel">
         <div class="list-header">弹幕详情
             <img src="../static/img/close.png" alt="close" class="close-btn" title="关闭">
         </div>
         <h3 class="title"></h3>
-        <a href="" class="source"><-查看源网页-></a>
-        <p class="contents"></p>
-        <p class="update-time"></p>
+        <p class="author"></p>
+        <img src="../static/img/loading.gif" alt="弹幕封面" class="cover">
+        <a class="source"><-查看源网页-></a>
     </div>
+    {# 弹幕列表 弹幕详情 #}
 {% endblock %}
 {% block script %}
     <script type="text/javascript">
     //js和html文件是分开的，传递数据需要先定义好参数，再执行js。参考：https://blog.csdn.net/m0_38061194/article/details/78891125
         var Server = {
-            barrage:{{ barrages|safe }}
+            barrages:{{ barrages|safe }}
         };
     </script>
     <script src="../static/js/barrage.js"></script>
+    <script src="../static/js/barrage_list.js"></script>
+    <script src="../static/js/barrage_details.js"></script>
 {% endblock %}

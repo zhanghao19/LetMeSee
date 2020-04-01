@@ -1,9 +1,14 @@
 import random
-from flask import Blueprint, render_template, request
+from pymongo import MongoClient
 
-from Spider import baidu_barrages, bilibili_barrages
+from flask import Blueprint, render_template, request, jsonify
+
+from Spider import bilibili_barrages, baidu_barrages
+
 
 first_blue = Blueprint('index', __name__)
+
+coll = MongoClient(host="localhost", port=27017).Spider.LetMeSee
 
 
 @first_blue.route('/')
@@ -22,6 +27,17 @@ def baidu():
 @first_blue.route('/bilibili/')
 def bilibili():
     return render_template('barrage.html', barrages=bilibili_barrages)
+
+
+@first_blue.route('/detail/')
+def barrage_details():
+    barrage_id = request.args.get('barrage_id')
+    barrage = coll.find_one(
+        {'BID': barrage_id},
+        {'_id': 0, 'WriteTime': 0})
+    print(barrage, barrage_id, type(barrage_id))
+    # data={'BID': 1, 'BAuthor': '深海色带鱼', 'BType': 'bilibili'}
+    return jsonify(barrage)
 
 
 # @first_blue.route('/popups')
