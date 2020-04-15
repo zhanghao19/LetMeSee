@@ -10,3 +10,4 @@ mg.coll.drop()
 
 os.system(r"python D:\Fire\PycharmProject\LetMeSee\Spider\spider_mode\bilibili_spider.py")
 os.system(r"python D:\Fire\PycharmProject\LetMeSee\Spider\spider_mode\baidu_spider.py")
+os.system(r"python D:\Fire\PycharmProject\LetMeSee\Spider\spider_mode\zhihu_spider.py")

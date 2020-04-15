@@ -9,7 +9,7 @@ function showDetailPanel(obj) {
     barrageList.style.display = "none";
     //设置详情页的参数
     barrageTitle.innerHTML = obj.BText;
-    barrageAuthor.innerHTML = obj.BAuthor;
+    barrageAuthor.innerHTML = '--' + obj.BAuthor;
     barrageCover.setAttribute('src', obj.BCover);
 
 
