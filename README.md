@@ -1,10 +1,9 @@
 # LetMeSee
 
 #### Description
-【开发中】LetMeSee（让我康康），在线新闻类网站，在页面上以弹幕的形式展示文章的标题，鼠标悬停预览文章，鼠标点击跳转至源网址，会陆续支持新闻、动漫、知乎热文等，基于爬虫+web开发技术
+LetMeSee-弹幕新闻平台,基于爬虫+web开发技术. 在线新闻类网站，在页面上以弹幕的形式展示文章的标题，点击可查看弹幕详情, 支持显示弹幕列表. 弹幕内容为百度新闻、B站top榜、知乎热榜等.
 
-#### Software Architecture
-Software architecture description
+
 
 #### Installation
 
