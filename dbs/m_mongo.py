@@ -11,4 +11,7 @@ class MyMongoDB:
 if __name__ == '__main__':
     mg = MyMongoDB()
     # 设置过期时间, 第一次使用要先创建这个索引
-    mg.coll.create_index([('WriteTime', 1)], expireAfterSeconds=43200)
+    try:
+        mg.coll.create_index([('WriteTime', 1)], expireAfterSeconds=43200)
+    except Exception:
+        print('Expire index already existing!')

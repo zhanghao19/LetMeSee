@@ -8,7 +8,7 @@
     //容器的宽高度
     let contentWidth = ~~window.getComputedStyle(barrageBoxWrap).width.replace('px', '');
     let boxHeight = ~~window.getComputedStyle(barrageBox).height.replace('px', '');
-
+    //当前窗口可以垂直展示多少个弹幕, 30代表弹幕字体大小
     let heightArrayLength = Math.round(boxHeight / 30);
     //定义一个包含弹幕的宽和高度范围的数组
     let heightArray = [];
@@ -154,7 +154,7 @@
     /*******初始化事件**********/    //整个事件的入口
     //获取弹幕数据集
     let barrageArray = Server.barrages;
-    //循环弹幕数组所需的切片次数
+    //循环弹幕数组所需的切片次数, 弹幕总数/垂直可以显示的弹幕数=弹幕播放组数
     let forTime = Math.ceil(barrageArray.length / heightArrayLength);
     for (let i = 0; i < forTime; i++) {
         //对弹幕数组切片,取出一部分要显示的弹幕,一直循环到取完

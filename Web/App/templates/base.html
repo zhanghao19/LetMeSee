@@ -5,6 +5,7 @@
   <title id="title">{% block title %}{% endblock %}</title>
   <link rel="stylesheet" href="../static/css/reset.css">
   <link rel="stylesheet" href="../static/css/base.css">
+    <!-- 上面的是模板自带的静态文件, 下面是为项目需要准备的 -->
     {% block link %}{% endblock %}
 </head>
 <body>
@@ -19,19 +20,17 @@
     <!-- nav start -->
     <nav class="nav">
       <ul class="menu">
-        <li><a href="/">全部</a></li>
-        <li><a href="/baidu/">新闻</a></li>
-        <li><a href="/bilibili/">B站</a></li>
-        <li><a href="/zhihu/">知乎</a></li>
+        <!-- 这里是导航条上的一些选项-->
+          {% block nav %}{% endblock %}
       </ul>
     </nav>
     <!-- nav end -->
   </div>
 </header>
 <!-- header end -->
-<!-- mian start -->
-<!-- 主要内容部分，可以写成继承，但由于这一部分主要的区别在于后台的数据传输，因此暂不做继承模板处理 -->
+<!-- main start -->
 <main id="main">
+<!-- 弹幕的容器 -->
 {% block main %}{% endblock %}
 </main>
 <!-- main end -->
