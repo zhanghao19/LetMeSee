@@ -11,22 +11,11 @@ Software architecture description
 1.  首先安装环境依赖包：
 
     `pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple`
-2.  打开控制台cd到WebProject文件夹中，使用命令启动服务：
+    
+2. 运行`runSpider.py`文件, 目的是创建过期索引, 执行爬虫获取数据.
+3.  打开控制台cd到WebProject文件夹中，使用命令启动服务：
     
     `python manage.py runserver -r -d`
-
-#### Instructions
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### Contribution
-
-1.  Fork the repository
-2.  Create Feat_xxx branch
-3.  Commit your code
-4.  Create Pull Request
 
 
 #### Gitee Feature
