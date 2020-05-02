@@ -17,6 +17,7 @@ def index():
     barrages = baidu_barrages + bilibili_barrages + zhihu_barrages
     random.shuffle(barrages)    # 打乱列表的顺序
     return render_template('barrage.html', barrages=barrages)
+    # return jsonify(barrages)
 
 
 @first_blue.route('/baidu/')

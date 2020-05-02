@@ -1,5 +1,6 @@
 //弹幕的实现
 (function () {
+    /*******定义参数********/
     let barrageColorArray = {baidu : '#5519EB', bilibili: '#ff53e0', zhihu: '#0099cc'};
     let barrageTipWidth = 50; //提示框的宽度
     let barrageBoxWrap = document.querySelector('.barrage-container-wrap');
@@ -9,7 +10,7 @@
     let contentWidth = ~~window.getComputedStyle(barrageBoxWrap).width.replace('px', '');
     let boxHeight = ~~window.getComputedStyle(barrageBox).height.replace('px', '');
     //当前窗口可以垂直展示多少个弹幕, 30代表弹幕字体大小
-    let heightArrayLength = Math.round(boxHeight / 30);
+    let howManyBarrageY = Math.round(boxHeight / 30);
     //定义一个包含弹幕的宽和高度范围的数组
     let heightArray = [];
     // console.log(heightArray);
@@ -18,11 +19,11 @@
         heightArray.push(i)
     }
 
-    //创建弹幕
+    /*******创建弹幕**********/
     function createBarrage(item, index, forTime) {
-        if (index >= heightArrayLength) {
+        if (index >= howManyBarrageY) {
             //如果索引达到高度数组的长度,则需重置索引到0,因此取余数
-            index = index % heightArrayLength;
+            index = index % howManyBarrageY;
         }
         let divNode = document.createElement('div');    //弹幕的标签
         let divChildNode = document.createElement('div');  //提示文本的标签
@@ -56,7 +57,7 @@
         });
     }
 
-    //初始化弹幕移动(速度，延迟)
+    /*******初始化弹幕的移动事件*********/
     function initBarrage(obj) {
         //初始化位置颜色
         this.style.left = obj.left + 'px';
@@ -68,11 +69,6 @@
         this.width = ~~window.getComputedStyle(this).width.replace('px', '');   //弹幕的长度
         this.offsetLeft = obj.left;
         this.timer = null;
-        this.timeOut = null;
-
-        //弹幕子节点，即提示信息，span标签
-        let barrageChileNode = this.children[0];
-        barrageChileNode.style.left = (this.width - barrageTipWidth) / 2 + 'px';//定义span标签的位置
 
         //运动
         barrageAnimate(this);
@@ -80,21 +76,12 @@
         //鼠标悬停停止
         this.onmouseenter = function () {
             cancelAnimationFrame(this.timer);//弹幕停止移动
-            function showDetailPopups() {
-                //显示提示****此处用于展示详情窗口
-                barrageChileNode.style.display = 'block';
-            }
-            //设置延迟显示
-            this.timeOut = setTimeout(showDetailPopups, 1000);
-
         };
 
         //鼠标移走
         this.onmouseleave = function () {
-            //鼠标移走，隐藏提示
-            barrageChileNode.style.display = 'none';
+            //鼠标移走
             barrageAnimate(this);//弹幕继续移动
-            clearTimeout(this.timeOut)
         };
 
         //打开弹幕对应的目标页面
@@ -119,7 +106,7 @@
 
     }
 
-    //回流：增删元素会引起回流，重绘：改变样式会引起重绘
+    /*******辅助弹幕移动*********/
     //弹幕动画
     function barrageAnimate(obj) {
         move(obj);
@@ -133,10 +120,9 @@
         } else {
             //超出可见范围，取消回调函数的调用-->让弹幕停止移动
             cancelAnimationFrame(obj.timer);
-            //删除节点
-            obj.parentNode.removeChild(obj);
+
         }
-    }
+    }//回流：增删元素会引起回流，重绘：改变样式会引起重绘
 
     //弹幕移动
     function move(obj) {
@@ -147,18 +133,17 @@
 
     //随机获取区间内的一个值
     function getRandom(start, end) {
-        return start + (Math.random() * (end - start));
+        return start + (Math.random() * (end - start)); //Math.random()随机获取一个0~1之间的值
     }
 
-    //Math.random()随机获取一个0~1之间的值
     /*******初始化事件**********/    //整个事件的入口
     //获取弹幕数据集
     let barrageArray = Server.barrages;
     //循环弹幕数组所需的切片次数, 弹幕总数/垂直可以显示的弹幕数=弹幕播放组数
-    let forTime = Math.ceil(barrageArray.length / heightArrayLength);
-    for (let i = 0; i < forTime; i++) {
+    let howManyGroupBarrages = Math.ceil(barrageArray.length / howManyBarrageY);
+    for (let i = 0; i < howManyGroupBarrages; i++) {
         //对弹幕数组切片,取出一部分要显示的弹幕,一直循环到取完
-        let eachBarrageArray = barrageArray.slice(heightArrayLength * i, heightArrayLength * (i + 1));
+        let eachBarrageArray = barrageArray.slice(howManyBarrageY * i, howManyBarrageY * (i + 1));
         for (let item of eachBarrageArray) {
             //遍历每个弹幕, 并传入弹幕元素的索引,和循环次数(用作定位)
             createBarrage(item, eachBarrageArray.indexOf(item), i + 1);

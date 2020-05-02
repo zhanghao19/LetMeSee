@@ -6,11 +6,13 @@ from datetime import datetime
 
 import requests
 from lxml import etree
-from dbs.m_mongo import MyMongoDB
+from pymongo import MongoClient
+
 # 用户登录后的cookies,直接F12->Network复制Request Headers的cookie即可
 from util.zhihu_cookies import Cookies
 
-mg = MyMongoDB()
+
+coll = MongoClient(host="localhost", port=27017).Spider.LetMeSee
 
 headers = {'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
            'cache-control': 'max-age=0',
@@ -34,4 +36,4 @@ for i in range(len(hotList)):
     item['BType'] = 'zhihu'
     item['BCover'] = hotList[i]["target"]["imageArea"]["url"]    # 封面
     item['WriteTime'] = datetime.utcnow()   # 写入时间, 用于设置过期时间
-    mg.coll.insert_one(dict(item))
+    coll.insert_one(dict(item))

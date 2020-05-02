@@ -6,9 +6,9 @@ import json
 import requests
 import re
 
-from dbs.m_mongo import MyMongoDB
+from pymongo import MongoClient
 
-mg = MyMongoDB()
+coll = MongoClient(host="localhost", port=27017).Spider.LetMeSee
 
 resp = requests.get('https://www.bilibili.com/ranking')
 
@@ -25,4 +25,4 @@ for i in range(len(rankList)):
     item['BType'] = 'bilibili'
     item['BCover'] = rankList[i]['pic']    # 封面
     item['WriteTime'] = datetime.utcnow()   # 写入时间, 用于设置过期时间
-    mg.coll.insert_one(dict(item))
+    coll.insert_one(dict(item))

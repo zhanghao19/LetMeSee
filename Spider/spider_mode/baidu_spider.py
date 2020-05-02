@@ -2,9 +2,9 @@ import requests
 from datetime import datetime
 from lxml import etree
 
-from dbs.m_mongo import MyMongoDB
+from pymongo import MongoClient
 
-mg = MyMongoDB()
+coll = MongoClient(host="localhost", port=27017).Spider.LetMeSee
 
 # 百度和B站的爬虫相似,于是设计成通用方法
 resp = requests.get('https://news.baidu.com/')
@@ -20,9 +20,9 @@ for n in range(len(title_ls)):
     item['BText'] = title_ls[n]
     item['BUrl'] = url_ls[n]
     item['BType'] = 'baidu'
-    item['BCover'] = ''  # 封面
+    item['BCover'] = r'D:\Fire\PycharmProject\LetMeSee\Web\App\static\img\loading.gif'  # 封面
     item['BAuthor'] = '未知作者'  # 作者
     item['WriteTime'] = datetime.utcnow()  # 写入时间, 用于设置过期时间
-    mg.coll.insert_one(dict(item))
+    coll.insert_one(dict(item))
 
 
