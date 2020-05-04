@@ -24,5 +24,5 @@ for n in range(len(title_ls)):
     item['BAuthor'] = '未知作者'  # 作者
     item['WriteTime'] = datetime.utcnow()  # 写入时间, 用于设置过期时间
     coll.insert_one(dict(item))
-
+print('百度新闻--爬取完成!')
 

@@ -2,7 +2,6 @@
 (function () {
     /*******定义参数********/
     let barrageColorArray = {baidu : '#5519EB', bilibili: '#ff53e0', zhihu: '#0099cc'};
-    let barrageTipWidth = 50; //提示框的宽度
     let barrageBoxWrap = document.querySelector('.barrage-container-wrap');
     let barrageBox = document.querySelector('.barrage-container');
 

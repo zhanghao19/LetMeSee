@@ -12,7 +12,6 @@ function showDetailPanel(obj) {
     barrageAuthor.innerHTML = '--' + obj.BAuthor;
     barrageCover.setAttribute('src', obj.BCover);
 
-
     barrageURL.onclick = function () {
         window.open(obj.BUrl);
     };

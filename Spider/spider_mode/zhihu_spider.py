@@ -37,3 +37,4 @@ for i in range(len(hotList)):
     item['BCover'] = hotList[i]["target"]["imageArea"]["url"]    # 封面
     item['WriteTime'] = datetime.utcnow()   # 写入时间, 用于设置过期时间
     coll.insert_one(dict(item))
+print('知乎热榜--爬取完成!')
